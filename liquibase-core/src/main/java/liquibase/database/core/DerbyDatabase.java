@@ -35,18 +35,12 @@ public class DerbyDatabase extends AbstractJdbcDatabase {
 
     @Override
     public boolean isCorrectDatabaseImplementation(DatabaseConnection conn) throws DatabaseException {
-        return "Apache Derby".equalsIgnoreCase(conn.getDatabaseProductName());
+        return "Splice Machine".equalsIgnoreCase(conn.getDatabaseProductName());
     }
 
     @Override
     public String getDefaultDriver(String url) {
-        // CORE-1230 - don't shutdown derby network server
-        if (url.startsWith("jdbc:derby://")) {
-            return "org.apache.derby.jdbc.ClientDriver";
-        } else if (url.startsWith("jdbc:derby") || url.startsWith("java:derby")) {
-            return "org.apache.derby.jdbc.EmbeddedDriver";
-        }
-        return null;
+        return "com.splicemachine.db.jdbc.ClientDriver";
     }
 
     @Override
@@ -71,7 +65,7 @@ public class DerbyDatabase extends AbstractJdbcDatabase {
 
     @Override
     protected String getDefaultDatabaseProductName() {
-        return "Derby";
+        return "SpliceMachine";
     }
 
     @Override
@@ -84,7 +78,7 @@ public class DerbyDatabase extends AbstractJdbcDatabase {
 
     @Override
     public String getShortName() {
-        return "derby";
+        return "splice";
     }
 
     public boolean getShutdownEmbeddedDerby() {
